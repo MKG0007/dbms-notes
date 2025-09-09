@@ -37,7 +37,7 @@ This repository contains concise notes on **DBMS fundamentals**, architecture, a
 
 ## 📌 Data Abstraction  
 - **Definition**: Hides unnecessary details and shows only relevant data to the user.  
-- **Note**: Structure at the **physical level** affects the structure at the **logical level**.  
+- **Note**: Structure at the **physical level** does not affects the structure at the **logical level**.  
 
 ### Three-Schema Architecture  
 1. **Physical Level** (lowest abstraction)  
