@@ -140,3 +140,93 @@ A **DBA** is a person who has central control over both data and programs access
 - DBMS architectures: T-1, T-2, T-3 (for different scales of applications).  
 
 ---
+
+# Entity-Relationship (ER) Model  
+
+The **Entity-Relationship (ER) Model** is a **high-level data model** based on the real-world perception of entities and the relationships among them.  
+- Acts as a **blueprint of the database**.  
+- Consists of **entities**, their **attributes**, and **relationships**.  
+
+---
+
+## 📌 Key Concepts  
+
+### 🔹 Entity  
+- **Definition**: A basic object that exists in the real world and is distinguishable from other objects.  
+- **Entity Set**: Collection of entities of the same type with the same properties or attributes.  
+- **Example**:  
+  - Customer  
+  - Order  
+  - Loan  
+
+### 🔹 Attributes  
+Attributes describe the properties of an entity.  
+Among them, one attribute is chosen as the **primary key** to uniquely identify the entity.  
+
+#### Types of Attributes  
+1. **Simple Attribute** → Cannot be divided further.  
+   - Example: `Student_ID`  
+2. **Composite Attribute** → Can be subdivided.  
+   - Example: `Name (First, Middle, Last)`  
+3. **Single-Valued Attribute** → Only one value per entity.  
+   - Example: `Student_ID`  
+4. **Multi-Valued Attribute** → Can have multiple values.  
+   - Example: `Phone Numbers`  
+5. **Derived Attribute** → Derived from other attributes.  
+   - Example: `Age` (derived from DOB), `Loan Duration`  
+6. **Null Value** → Attribute may have no value.  
+   - Example: `Middle Name` (missing or not known)  
+
+---
+
+## 📌 Relationships  
+
+- **Definition**: Association among two or more entities.  
+- **Examples**:  
+  - Customer places Order → `(Customer, Order)`  
+  - Customer borrows Loan → `(Customer, Loan)`  
+
+### Types of Relationships  
+1. **Strong Relationship**  
+   - Identified by the primary key.  
+   - Example: Customer–Order.  
+2. **Weak Relationship**  
+   - Cannot be uniquely identified by only a primary key.  
+   - Example: Loan–Payment (payment exists only if loan exists).  
+
+---
+
+## 📌 Degree of Relationship  
+Defines how many entities participate in a relationship:  
+1. **Unary Relationship** → Involves one entity type.  
+2. **Binary Relationship** → Involves two entities (most common).  
+3. **Ternary Relationship** → Involves three entities.  
+
+---
+
+## 📌 Relationship Constraints  
+
+### 1. Mapping Cardinality  
+Specifies the number of entities that can participate in a relationship:  
+- **One-to-One (1:1)** → One entity relates with only one other.  
+- **One-to-Many (1:N)** → One entity can relate to many others, but the reverse is one-to-one.  
+- **Many-to-One (N:1)** → Reverse of one-to-many.  
+- **Many-to-Many (M:N)** → Entities on both sides can have multiple associations.  
+  - Example: `Customer ↔ Product` (a customer can buy many products, and a product can be bought by many customers).  
+
+### 2. Participation Constraints  
+- **Partial Participation** → Not all entities are involved.  
+- **Total Participation** → Every entity must participate.  
+
+👉 **Note**: A **Weak Entity** always has **Total Participation** in its identifying relationship.  
+
+---
+
+## ✅ Summary  
+- **ER Model** provides a conceptual design of the database.  
+- **Entities** represent real-world objects.  
+- **Attributes** define properties of entities.  
+- **Relationships** capture associations between entities.  
+- **Constraints** (Mapping & Participation) refine how entities interact.  
+
+---
