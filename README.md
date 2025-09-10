@@ -230,3 +230,119 @@ Specifies the number of entities that can participate in a relationship:
 - **Constraints** (Mapping & Participation) refine how entities interact.  
 
 ---
+
+
+## 🔹 Extended ER Features  
+
+When building real-world projects, databases often become complex. To handle this, we use **Extended ER (EER) features** such as **Specialization, Generalization, and Aggregation**.  
+
+### 1. Specialization  
+- A process of dividing an entity into **sub-entities** based on their attributes.  
+- Helps make the database more **understandable**.  
+- Works like **inheritance** in OOP.  
+- **Approach** → Top-down.  
+
+✅ Example:  
+- `Employee` entity can be specialized into `Teacher`, `Engineer`, `Doctor`, etc.  
+
+---
+
+### 2. Generalization  
+- The **reverse** of specialization.  
+- Combines two or more entities having common features into a **generalized entity set**.  
+- **Approach** → Bottom-up.  
+
+✅ Example:  
+- `Car`, `Motorbike`, and `Cycle` can be generalized into a single `Vehicle` entity.  
+
+---
+
+### 3. Aggregation  
+- Used to represent **relationships among relationships**.  
+- Involves **abstraction** where a relationship is treated as a **higher-level entity set** (abstract entity).  
+
+✅ Example:  
+- If `Employee` works on a `Project`, and `Manager` manages that relationship, then "works_on" can be aggregated into a higher-level entity.  
+
+---
+
+### 📝 Steps to Create an ER Diagram  
+1. Identify **entity sets**.  
+2. Identify their **attributes**.  
+3. Identify **constraints and relationships**.  
+4. Specify **mapping cardinality** and **participation**.  
+
+---
+
+## 🔹 Relational Model  
+
+In the relational model, data is represented in the form of **tables (relations)**.  
+
+- **Structure:**  
+  - **Entity → Table**  
+  - **Attributes → Columns**  
+  - Values in attributes must be **atomic** (indivisible).  
+  - Sequence of columns **does not matter**.  
+
+- **Relation Schema:**  
+  - Describes the **design and structure** of a relation.  
+  - Includes the **relation name** and all attributes.  
+
+✅ Example:  
+```sql
+Customer(Customer_ID, Name, Address, Contact_No)  
+Order(Order_ID, Timestamp, Delivery)
+
+```
+
+# 🔑 Relational Model Keys & Integrity Constraints  
+
+This section covers different types of **keys** in the relational model and the **integrity constraints** that ensure consistency in a database.  
+
+---
+
+## 🔹 Relational Model Keys  
+
+Keys are always defined on **attributes**. They are used to uniquely identify tuples (rows) in a table.  
+
+### 1. Super Key  
+- Any combination of attributes that can **uniquely identify a tuple** in a table.  
+
+---
+
+### 2. Candidate Key  
+- A **minimal subset** of a super key.  
+- Can uniquely identify a tuple but does not contain **redundant attributes**.  
+- **Cannot be NULL**.  
+
+---
+
+### 3. Primary Key  
+- Chosen from the candidate keys.  
+- Has the **least number of attributes**.  
+- Every relation can have **only one primary key**.  
+
+---
+
+### 4. Alternate Key  
+- Candidate keys that are **not selected** as the primary key.  
+
+---
+
+### 5. Foreign Key  
+- Used to establish **relationships between entities**.  
+- Works by taking the **primary key of one table** and adding it into another table.  
+
+**Terms:**  
+- **Referenced Relation / Parent Table** → The table whose primary key is used.  
+- **Referencing Relation / Child Table** → The table where the foreign key is placed.  
+
+✅ Example:  
+```sql
+CREATE TABLE Orders (
+    Order_ID INT PRIMARY KEY,
+    Customer_ID INT,
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID)
+        ON DELETE CASCADE
+);
+```
