@@ -346,3 +346,222 @@ CREATE TABLE Orders (
         ON DELETE CASCADE
 );
 ```
+
+
+
+
+
+
+
+
+
+---
+---
+# 📘 SQL Notes  
+
+This document contains concise notes on **SQL fundamentals**, data types, commands, and examples.  
+
+---
+
+## 🔹 What is SQL?  
+**SQL (Structured Query Language)** is a database language used to **interact with databases**.  
+It helps perform CRUD operations (**Create, Read, Update, Delete**) on data.  
+
+- Example:  
+  - **MySQL** → An RDBMS (Relational Database Management System) that uses SQL.  
+
+---
+
+## 🔹 SQL Data Types  
+
+- **Basic Types**:  
+  - `INT` → Integer numbers  
+  - `VARCHAR(n)` → Variable-length string  
+  - `CHAR(n)` → Fixed-length string  
+
+- **Unsigned vs Signed**:  
+  - `SIGNED` → Can store positive & negative values  
+  - `UNSIGNED` → Only positive values (doubles storage range)  
+
+- **Advanced Type**:  
+  - `JSON` → Store JSON (JavaScript Object Notation) objects  
+
+---
+
+## 🔹 Types of SQL Commands  
+
+1. **DDL (Data Definition Language)** → Define & manage schema  
+   - `CREATE`, `DROP`, `ALTER`  
+
+2. **DML (Data Manipulation Language)** → Manipulate data  
+   - `INSERT`, `UPDATE`, `DELETE`  
+
+3. **DCL (Data Control Language)** → Control access  
+   - `GRANT`, `REVOKE`  
+
+4. **TCL (Transaction Control Language)** → Manage transactions  
+   - `COMMIT`, `ROLLBACK`, `SAVEPOINT`  
+
+5. **DQL (Data Query Language)** → Query data  
+   - `SELECT`  
+
+---
+
+## 🔹 Managing Databases (DDL)  
+
+```sql
+-- Create database if it does not exist
+CREATE DATABASE IF NOT EXISTS company;
+
+-- Select database
+USE company;
+
+-- Drop database if exists
+DROP DATABASE IF EXISTS company;
+
+-- Show all databases
+SHOW DATABASES;
+
+-- Show all tables in current database
+SHOW TABLES;
+```
+## 🔹 Data Query Language (DQL)
+**Selecting Data**->
+```sql
+-- Select all columns
+SELECT * FROM worker;
+
+-- Select specific columns
+SELECT name, salary FROM worker;
+
+```
+
+**Without FROM (using DUAL table in MySQL)**
+```sql
+-- Perform calculations
+SELECT 55 + 1;
+
+-- Current server time
+SELECT NOW();
+
+-- Convert to uppercase
+SELECT UCASE('mayank');
+```
+
+## 🔹 Filtering Data (WHERE Clause)
+```sql
+SELECT * FROM worker WHERE salary > 1000;
+```
+
+## Operators
+
+1. **BETWEEN a AND b → Inclusive range**
+
+2. **OR → Multiple conditions**
+
+3. **NOT → Negation**
+
+4. **IN (...) → Matches one of multiple values**
+
+```sql
+-- Range
+SELECT * FROM worker WHERE salary BETWEEN 2000 AND 5000;
+
+-- Multiple conditions
+SELECT * FROM worker WHERE department IN ('HR', 'IT');
+```
+
+## 🔹 Pattern Matching (Wildcards with LIKE)
+```
+-- Contains 'i'
+SELECT * FROM worker WHERE name LIKE '%i%';
+
+-- 'i' at second position
+SELECT * FROM worker WHERE name LIKE '_i%';
+```
+👉 LIKE is case-insensitive in MySQL.
+
+## 🔹 Sorting Results (ORDER BY)
+```sql
+-- Ascending (default)
+SELECT * FROM worker ORDER BY salary;
+
+-- Descending
+SELECT * FROM worker ORDER BY salary DESC;
+```
+
+
+
+## 🔹 Removing Duplicates (DISTINCT)
+
+
+```sql
+-- Distinct values of a column
+SELECT DISTINCT department FROM worker;
+
+-- Distinct rows (entire tuple)
+SELECT DISTINCT * FROM worker;
+
+```
+ℹ️ Note: If even one column differs, both rows are kept.
+
+## 🔹 Data Grouping (GROUP BY)
+
+```sql
+-- Count employees per department
+SELECT department, COUNT(*) 
+FROM worker 
+GROUP BY department;
+
+-- Average salary per department
+SELECT department, AVG(salary) 
+FROM worker 
+GROUP BY department;
+
+```
+✅ Aggregate functions → MIN(), MAX(), SUM(), AVG(), COUNT()
+
+## 🔹 Filtering Groups (HAVING vs WHERE)
+
+```sql
+-- Departments with more than 2 employees
+SELECT department, COUNT(*) 
+FROM worker 
+GROUP BY department 
+HAVING COUNT(*) > 2;
+
+```
+### Difference:
+
+- WHERE → filters rows before grouping
+- HAVING → filters groups after aggregation
+
+
+## 🔹 Constraints in DDL
+
+
+### Primary Key
+
+```sql
+CREATE TABLE employee (
+  id INT PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+```
+
+### Foreign Key
+```sql
+CREATE TABLE orders (
+  order_id INT PRIMARY KEY,
+  delivery DATE,
+  cust_id INT,
+  FOREIGN KEY (cust_id) REFERENCES customer(id)
+);
+```
+✔️ A table can have multiple foreign keys.
+✔️ Primary key is usually INT for fast indexing.
+
+
+
+
