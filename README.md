@@ -17,7 +17,8 @@ This repository contains concise notes on **DBMS fundamentals**, architecture, a
 ---
 
 ## 📌 DBMS (Database Management System)  
-- A collection of **interrelated data (database)** and a set of **programs to access those data**.  
+- A collection of **interrelated data (database)** and a set of **programs to access those data**.
+- A Database Management System (DBMS) is software that allows users to create, store, manage, and retrieve data efficiently from a database while ensuring data integrity, security, and consistency. 
 
 ---
 
