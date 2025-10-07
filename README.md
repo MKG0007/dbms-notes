@@ -465,13 +465,14 @@ SHOW TABLES;
 
 ## 🔍 DQL — Data Query Language
 
-### Fetch Data
+### Fetch Data(Select)
 ```sql
 SELECT * FROM employee;  -- Fetch all columns
 SELECT name, salary FROM employee;  -- Fetch specific columns
 ```
 
 ### Using the DUAL Table
+- we can use "SELECT" without useing "FORM" with the help of dual table
 ```sql
 SELECT 55 + 1;
 SELECT NOW();  -- Current server time
@@ -494,6 +495,7 @@ SELECT * FROM worker WHERE salary > 1000;
 ```sql
 SELECT * FROM worker WHERE department IN ('HR', 'Admin');
 SELECT * FROM worker WHERE department NOT IN ('Finance', 'IT');
+SELECT * FROM worker WHERE salary IS NOT NULL;
 ```
 
 ---
@@ -503,7 +505,6 @@ SELECT * FROM worker WHERE department NOT IN ('Finance', 'IT');
 SELECT * FROM worker WHERE name LIKE '%i%';   -- contains 'i'
 SELECT * FROM worker WHERE name LIKE '_i%';   -- 'i' is second letter
 ```
-
 🔸 Case-insensitive by default.
 
 ---
@@ -617,6 +618,11 @@ CREATE TABLE customer (
 | **Drop Column** | `ALTER TABLE account DROP COLUMN saving_interest;` |
 | **Rename Table** | `ALTER TABLE account RENAME TO account_details;` |
 
+### note-->imp
+- **delete -->** it is use to dalete the rows of the table according the given condition.
+- **drop -->** it is use to delete the databases and tables with there structure.
+- **turncate -->** it is use to empty the table but the structure of the table remain same.
+
 ---
 
 ## ✍️ DML — Data Manipulation Language
@@ -654,7 +660,7 @@ UPDATE customer SET city = 'Unknown';
 
 ---
 
-### Delete Data
+### Delete Data(it is use to delete the data 
 ```sql
 DELETE FROM customer WHERE id = 1;
 ```
