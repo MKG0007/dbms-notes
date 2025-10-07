@@ -321,7 +321,17 @@ Keys are always defined on **attributes**. They are used to uniquely identify tu
 ### 3. Primary Key  
 - Chosen from the candidate keys.  
 - Has the **least number of attributes**.  
-- Every relation can have **only one primary key**.  
+- Every relation can have **only one primary key**.
+
+
+### note-->
+- combination of the primary key
+--> combination of two or more cols 
+-> in this both can have duplicate values but together it will always have unique combination
+```sql
+primary key ( col1 , col2 );
+
+```
 
 ---
 
@@ -424,13 +434,13 @@ Unsigned types increase the positive range (no negative values).
 
 ## 🧩 Types of SQL Commands
 
-| Type | Full Form | Description |
-|------|------------|--------------|
-| **DDL** | Data Definition Language | Define or modify database structure |
-| **DML** | Data Manipulation Language | Manipulate data inside tables |
-| **DQL** | Data Query Language | Query and fetch data |
-| **DCL** | Data Control Language | Manage access and permissions |
-| **TCL** | Transaction Control Language | Manage transactions |
+| Type | Full Form | Description | Commands |
+|------|------------|--------------|---------------|
+| **DDL** | Data Definition Language | Define or modify database structure | CREATE , ALTER , RENAME , TRUNCATE and DROP |
+| **DML** | Data Manipulation Language | Manipulate data inside tables | INSERT , UPDATE and DELETE |
+| **DQL** | Data Query Language | Query and fetch data | SELECT |
+| **DCL** | Data Control Language | Manage access and permissions | not important for now |
+| **TCL** | Transaction Control Language | Manage transactions | not important for now |
 
 ---
 
@@ -438,6 +448,10 @@ Unsigned types increase the positive range (no negative values).
 
 ### 1️⃣ Create a Database
 ```sql
+
+CREATE DATABASE company;
+
+//better and professional way
 CREATE DATABASE IF NOT EXISTS company;
 ```
 
@@ -542,6 +556,9 @@ GROUP BY department
 HAVING COUNT(*) > 2;
 ```
 
+### node:-
+- LIMIT num  --> it will give the defined number of tuple form the database.
+
 #### 🧩 WHERE vs HAVING
 | Clause | Works On | Used With |
 |--------|-----------|------------|
@@ -601,9 +618,17 @@ CREATE TABLE customer (
 ### CHECK Constraint
 ```sql
 CREATE TABLE customer (
+
+
   age INT,
   CONSTRAINT check_age CHECK(age > 12)
+
+// other way
+age INT CHECK (age> 18),
 );
+
+
+
 ```
 
 ---
@@ -674,6 +699,7 @@ DELETE FROM customer;
 🧩 **Foreign Key Handling**
 - `ON DELETE CASCADE` → delete dependent rows automatically  
 - `ON DELETE SET NULL` → set foreign key to NULL on deletion
+- `ON UPDATE CASCADE` → update the dependent rows automatically
 
 ---
 
