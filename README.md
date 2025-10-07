@@ -372,197 +372,411 @@ It helps perform CRUD operations (**Create, Read, Update, Delete**) on data.
   - **MySQL** → An RDBMS (Relational Database Management System) that uses SQL.  
 
 ---
+# 🧠 SQL (Structured Query Language) — Complete Notes
 
-## 🔹 SQL Data Types  
-
-- **Basic Types**:  
-  - `INT` → Integer numbers  
-  - `VARCHAR(n)` → Variable-length string  
-  - `CHAR(n)` → Fixed-length string  
-
-- **Unsigned vs Signed**:  
-  - `SIGNED` → Can store positive & negative values  
-  - `UNSIGNED` → Only positive values (doubles storage range)  
-
-- **Advanced Type**:  
-  - `JSON` → Store JSON (JavaScript Object Notation) objects  
+SQL (Structured Query Language) is a **database language** used to **interact with and manage relational databases**.
 
 ---
 
-## 🔹 Types of SQL Commands  
+## 🗃️ Example of RDBMS
 
-1. **DDL (Data Definition Language)** → Define & manage schema  
-   - `CREATE`, `DROP`, `ALTER`  
-
-2. **DML (Data Manipulation Language)** → Manipulate data  
-   - `INSERT`, `UPDATE`, `DELETE`  
-
-3. **DCL (Data Control Language)** → Control access  
-   - `GRANT`, `REVOKE`  
-
-4. **TCL (Transaction Control Language)** → Manage transactions  
-   - `COMMIT`, `ROLLBACK`, `SAVEPOINT`  
-
-5. **DQL (Data Query Language)** → Query data  
-   - `SELECT`  
+**MySQL** → A popular Relational Database Management System (RDBMS) that uses SQL for CRUD operations  
+(CRUD → Create, Read, Update, Delete)
 
 ---
 
-## 🔹 Managing Databases (DDL)  
+## 📊 SQL Data Types
 
+### 🔢 Numeric Types
+| Type | Description |
+|------|--------------|
+| `INT` | Integer value (normal range) |
+| `BIGINT` | Larger range of integer |
+| `FLOAT` | Decimal with precision of up to 23 digits |
+| `DOUBLE` | Decimal with precision between 24–53 digits |
+
+---
+
+### 🔤 String Types
+| Type | Description |
+|------|--------------|
+| `CHAR(n)` | Fixed-length string. Even if data is smaller, storage size remains constant |
+| `VARCHAR(n)` | Variable-length string |
+| `TEXT` | Like `VARCHAR` but supports longer text (0–65535 characters) |
+| `BLOB` | Binary Large Object — used to store files like images, videos, and audio |
+
+---
+
+### ⚙️ Other Data Types
+| Type | Description |
+|------|--------------|
+| `BOOLEAN` | Stores `0` (false) or `1` (true) |
+| `DATE` | Format: `YYYY-MM-DD` |
+| `TIME` | Format: `HH:MM:SS` |
+| `DATETIME` | Combination of date and time |
+| `JSON` | Advanced datatype for storing JSON (JavaScript Object Notation) |
+
+📝 **Note:**  
+MySQL supports **signed** and **unsigned** numeric types.  
+Unsigned types increase the positive range (no negative values).
+
+---
+
+## 🧩 Types of SQL Commands
+
+| Type | Full Form | Description |
+|------|------------|--------------|
+| **DDL** | Data Definition Language | Define or modify database structure |
+| **DML** | Data Manipulation Language | Manipulate data inside tables |
+| **DQL** | Data Query Language | Query and fetch data |
+| **DCL** | Data Control Language | Manage access and permissions |
+| **TCL** | Transaction Control Language | Manage transactions |
+
+---
+
+## 🧱 DDL — Data Definition Language
+
+### 1️⃣ Create a Database
 ```sql
--- Create database if it does not exist
 CREATE DATABASE IF NOT EXISTS company;
+```
 
--- Select database
+### 2️⃣ Use a Database
+```sql
 USE company;
+```
 
--- Drop database if exists
+### 3️⃣ Delete a Database
+```sql
 DROP DATABASE IF EXISTS company;
+```
 
--- Show all databases
+### 4️⃣ Show Databases
+```sql
 SHOW DATABASES;
+```
 
--- Show all tables in current database
+### 5️⃣ Show Tables
+```sql
 SHOW TABLES;
 ```
-## 🔹 Data Query Language (DQL)
-**Selecting Data**->
+
+---
+
+## 🔍 DQL — Data Query Language
+
+### Fetch Data
 ```sql
--- Select all columns
-SELECT * FROM worker;
-
--- Select specific columns
-SELECT name, salary FROM worker;
-
+SELECT * FROM employee;  -- Fetch all columns
+SELECT name, salary FROM employee;  -- Fetch specific columns
 ```
 
-**Without FROM (using DUAL table in MySQL)**
+### Using the DUAL Table
 ```sql
--- Perform calculations
 SELECT 55 + 1;
-
--- Current server time
-SELECT NOW();
-
--- Convert to uppercase
-SELECT UCASE('mayank');
+SELECT NOW();  -- Current server time
+SELECT UCASE('mayank');  -- Convert to uppercase
 ```
 
-## 🔹 Filtering Data (WHERE Clause)
+---
+
+### Filter Data — `WHERE`
 ```sql
 SELECT * FROM worker WHERE salary > 1000;
 ```
 
-## Operators
-
-1. **BETWEEN a AND b → Inclusive range**
-
-2. **OR → Multiple conditions**
-
-3. **NOT → Negation**
-
-4. **IN (...) → Matches one of multiple values**
+#### Using Operators
+- `BETWEEN a AND b` → includes both endpoints  
+- `IN()` → multiple OR conditions  
+- `NOT` → negates a condition  
+- `IS NULL` → checks for NULL values
 
 ```sql
--- Range
-SELECT * FROM worker WHERE salary BETWEEN 2000 AND 5000;
-
--- Multiple conditions
-SELECT * FROM worker WHERE department IN ('HR', 'IT');
+SELECT * FROM worker WHERE department IN ('HR', 'Admin');
+SELECT * FROM worker WHERE department NOT IN ('Finance', 'IT');
 ```
 
-## 🔹 Pattern Matching (Wildcards with LIKE)
-```
--- Contains 'i'
-SELECT * FROM worker WHERE name LIKE '%i%';
+---
 
--- 'i' at second position
-SELECT * FROM worker WHERE name LIKE '_i%';
-```
-👉 LIKE is case-insensitive in MySQL.
-
-## 🔹 Sorting Results (ORDER BY)
+### 🪄 Wildcards — `LIKE`
 ```sql
--- Ascending (default)
-SELECT * FROM worker ORDER BY salary;
-
--- Descending
-SELECT * FROM worker ORDER BY salary DESC;
+SELECT * FROM worker WHERE name LIKE '%i%';   -- contains 'i'
+SELECT * FROM worker WHERE name LIKE '_i%';   -- 'i' is second letter
 ```
 
+🔸 Case-insensitive by default.
 
+---
 
-## 🔹 Removing Duplicates (DISTINCT)
-
-
+### 🧭 Sorting — `ORDER BY`
 ```sql
--- Distinct values of a column
+SELECT * FROM worker ORDER BY salary;         -- Ascending
+SELECT * FROM worker ORDER BY salary DESC;    -- Descending
+```
+
+---
+
+### 🧬 Distinct Records
+```sql
 SELECT DISTINCT department FROM worker;
-
--- Distinct rows (entire tuple)
-SELECT DISTINCT * FROM worker;
-
 ```
-ℹ️ Note: If even one column differs, both rows are kept.
+If two rows are completely identical, only one appears in results.
 
-## 🔹 Data Grouping (GROUP BY)
+---
 
+### 📊 Grouping Data — `GROUP BY`
 ```sql
--- Count employees per department
-SELECT department, COUNT(*) 
-FROM worker 
-GROUP BY department;
-
--- Average salary per department
-SELECT department, AVG(salary) 
-FROM worker 
-GROUP BY department;
-
+SELECT department, COUNT(*) FROM worker GROUP BY department;
+SELECT department, AVG(salary) FROM worker GROUP BY department;
 ```
-✅ Aggregate functions → MIN(), MAX(), SUM(), AVG(), COUNT()
+Aggregate functions: `SUM()`, `AVG()`, `MIN()`, `MAX()`, `COUNT()`
 
-## 🔹 Filtering Groups (HAVING vs WHERE)
+---
 
+### 🔎 Filtering Groups — `HAVING`
 ```sql
--- Departments with more than 2 employees
 SELECT department, COUNT(*) 
 FROM worker 
 GROUP BY department 
 HAVING COUNT(*) > 2;
-
 ```
-### Difference:
 
-- WHERE → filters rows before grouping
-- HAVING → filters groups after aggregation
+#### 🧩 WHERE vs HAVING
+| Clause | Works On | Used With |
+|--------|-----------|------------|
+| `WHERE` | Rows | `SELECT`, `UPDATE`, `DELETE` |
+| `HAVING` | Groups | `SELECT` with `GROUP BY` |
 
+---
 
-## 🔹 Constraints in DDL
-
+## 🔐 Constraints (DDL Level)
 
 ### Primary Key
+```sql
+CREATE TABLE account (
+  id INT PRIMARY KEY,
+  name VARCHAR(255)
+);
+```
+
+or
 
 ```sql
-CREATE TABLE employee (
-  id INT PRIMARY KEY,
-  name VARCHAR(50)
-);
-
+PRIMARY KEY(id)
 ```
+
+---
 
 ### Foreign Key
 ```sql
 CREATE TABLE orders (
-  order_id INT PRIMARY KEY,
+  id INT PRIMARY KEY,
   delivery DATE,
   cust_id INT,
   FOREIGN KEY (cust_id) REFERENCES customer(id)
 );
 ```
-✔️ A table can have multiple foreign keys.
-✔️ Primary key is usually INT for fast indexing.
 
+---
 
+### Unique Constraint
+```sql
+CREATE TABLE customer (
+  name VARCHAR(255) UNIQUE
+);
+```
 
+---
 
+### NOT NULL & DEFAULT
+```sql
+CREATE TABLE customer (
+  money INT NOT NULL DEFAULT 0
+);
+```
+
+---
+
+### CHECK Constraint
+```sql
+CREATE TABLE customer (
+  age INT,
+  CONSTRAINT check_age CHECK(age > 12)
+);
+```
+
+---
+
+## ⚙️ ALTER TABLE Operations
+
+| Operation | Example |
+|------------|----------|
+| **Add Column** | `ALTER TABLE account ADD interest FLOAT NOT NULL DEFAULT 0;` |
+| **Modify Column** | `ALTER TABLE account MODIFY interest DOUBLE;` |
+| **Rename Column** | `ALTER TABLE account CHANGE COLUMN interest saving_interest FLOAT;` |
+| **Drop Column** | `ALTER TABLE account DROP COLUMN saving_interest;` |
+| **Rename Table** | `ALTER TABLE account RENAME TO account_details;` |
+
+---
+
+## ✍️ DML — Data Manipulation Language
+
+### Insert Data
+```sql
+INSERT INTO customer VALUES (1, 'Mayank', 'Agra');
+```
+
+Multiple Rows:
+```sql
+INSERT INTO customer (id, name, city)
+VALUES (1, 'Mayank', 'Agra'),
+       (2, 'Raj', 'Delhi'),
+       (3, 'Simran', 'Mumbai');
+```
+
+Partial Columns:
+```sql
+INSERT INTO customer (name, city) VALUES ('Amit', 'Jaipur');
+```
+
+---
+
+### Update Data
+```sql
+UPDATE customer SET address = 'Agra', gender = 'M' WHERE id = 123;
+```
+
+Update All Rows (unsafe mode):
+```sql
+SET SQL_SAFE_UPDATES = 0;
+UPDATE customer SET city = 'Unknown';
+```
+
+---
+
+### Delete Data
+```sql
+DELETE FROM customer WHERE id = 1;
+```
+
+Delete All Rows:
+```sql
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM customer;
+```
+
+🧩 **Foreign Key Handling**
+- `ON DELETE CASCADE` → delete dependent rows automatically  
+- `ON DELETE SET NULL` → set foreign key to NULL on deletion
+
+---
+
+### Replace Command
+```sql
+REPLACE INTO customer (id, name) VALUES (1, 'Mayank');
+REPLACE INTO customer SET id = 1300, name = 'Mayank';
+```
+
+| Situation | Behavior |
+|------------|-----------|
+| Row Exists | Replaces the row |
+| Row Missing | Inserts new row |
+
+🆚 **Replace vs Update**
+- `REPLACE` inserts new data if not found  
+- `UPDATE` does nothing if row not found
+
+---
+
+## 🔗 SQL Joins
+
+| Join Type | Description |
+|------------|-------------|
+| **INNER JOIN** | Returns rows with matching values in both tables |
+| **LEFT JOIN** | Returns all rows from left table + matched rows from right |
+| **RIGHT JOIN** | Returns all rows from right table + matched rows from left |
+| **FULL JOIN** | Union of left and right join results |
+| **CROSS JOIN** | Cartesian product of both tables |
+| **SELF JOIN** | A table joins with itself |
+
+---
+
+### Inner Join Example
+```sql
+SELECT c.*, o.*
+FROM customer AS c
+INNER JOIN orders AS o
+ON c.id = o.cust_id;
+```
+
+---
+
+### Left Join Example
+```sql
+SELECT c.*, o.*
+FROM customer AS c
+LEFT JOIN orders AS o
+ON c.id = o.cust_id;
+```
+
+---
+
+### Right Join Example
+```sql
+SELECT c.*, o.*
+FROM customer AS c
+RIGHT JOIN orders AS o
+ON c.id = o.cust_id;
+```
+
+---
+
+### Full Join Example
+```sql
+SELECT c.*, o.* 
+FROM customer AS c LEFT JOIN orders AS o ON c.id = o.cust_id
+UNION
+SELECT c.*, o.* 
+FROM customer AS c RIGHT JOIN orders AS o ON c.id = o.cust_id;
+```
+
+---
+
+### Cross Join Example
+```sql
+SELECT * FROM customer CROSS JOIN orders;
+```
+
+---
+
+### Self Join Example
+```sql
+SELECT e1.id, e2.name
+FROM employee AS e1
+INNER JOIN employee AS e2
+ON e1.manager_id = e2.id;
+```
+
+---
+
+### Alternative Join Without `JOIN` Keyword
+```sql
+SELECT * 
+FROM customer c, orders o 
+WHERE c.id = o.cust_id;
+```
+
+---
+
+## ✅ Summary
+
+- SQL is used for managing and querying relational databases.
+- Key operations include:
+  - **DDL** → Define structure  
+  - **DML** → Modify data  
+  - **DQL** → Query data  
+  - **DCL** → Manage permissions  
+  - **TCL** → Handle transactions
+- Includes constraints, joins, grouping, and filtering mechanisms for data efficiency.
+
+---
