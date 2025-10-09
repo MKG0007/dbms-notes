@@ -798,6 +798,7 @@ FROM customer c, orders o
 WHERE c.id = o.cust_id;
 ```
 
+
 ---
 
 ## ✅ Summary
@@ -812,3 +813,33 @@ WHERE c.id = o.cust_id;
 - Includes constraints, joins, grouping, and filtering mechanisms for data efficiency.
 
 ---
+
+
+### Union
+- it is use d to combine the result set of two or more selected statements gives unique records.
+- **union all** it will also give duplicate.
+  
+#### condition to use:-
+- every table should have same number of column
+- columns must similar data types
+- it should we in same order
+
+---
+
+### sql sub queries
+- a inner or nested query within another sql query.
+- it involves two statements
+
+**there is a three ways to right the sub-query**
+- inside Select
+- inside from
+- inside where clause
+
+
+**example of sub-query inside where**  
+```sql
+
+select colname form table_name where condition (subquery);
+
+```
+
