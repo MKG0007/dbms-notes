@@ -507,6 +507,10 @@ SELECT * FROM worker WHERE salary > 1000;
 - `IS NULL` → checks for NULL values
 
 ```sql
+
+SELECT * FROM Worker WHERE Salary BETWEEN 1000 AND 2000;
+SELECT * FROM Worker WHERE NOT City = 'Delhi';
+SELECT * FROM Worker WHERE Bonus IS NULL;
 SELECT * FROM worker WHERE department IN ('HR', 'Admin');
 SELECT * FROM worker WHERE department NOT IN ('Finance', 'IT');
 SELECT * FROM worker WHERE salary IS NOT NULL;
