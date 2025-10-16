@@ -560,6 +560,14 @@ GROUP BY department
 HAVING COUNT(*) > 2;
 ```
 
+### CONCAT — 
+- use to represent the column in the combine column with alias name assigned by the 'as'
+```sql
+
+SELECT CONCAT(FirstName, ' ', LastName) AS FullName FROM Students;
+
+```
+
 ### node:-
 - LIMIT num  --> it will give the defined number of tuple form the database.
 
