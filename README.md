@@ -189,10 +189,11 @@ Among them, one attribute is chosen as the **primary key** to uniquely identify 
 
 ### Types of Relationships  
 1. **Strong Relationship**  
-   - Identified by the primary key.  
-   - Example: Customer–Order.  
+   - A relationship where the child entity CAN be uniquely identified by its own primary key, without depending on another entity.  
+   - Example: Customer–Order.
+   - Order exists independently. Even if the customer leaves, the order record still stays.
 2. **Weak Relationship**  
-   - Cannot be uniquely identified by only a primary key.  
+   - A relationship where the child entity CANNOT be uniquely identified without the parent entity.  
    - Example: Loan–Payment (payment exists only if loan exists).  
 
 ---
@@ -259,11 +260,17 @@ When building real-world projects, databases often become complex. To handle thi
 ---
 
 ### 3. Aggregation  
-- Used to represent **relationships among relationships**.  
+- Used to represent **relationships among relationships**.
+- It allows us to treat an entire relationship as a higher-level entity.  
 - Involves **abstraction** where a relationship is treated as a **higher-level entity set** (abstract entity).  
 
 ✅ Example:  
-- If `Employee` works on a `Project`, and `Manager` manages that relationship, then "works_on" can be aggregated into a higher-level entity.  
+- A Manager supervises the work that an Employee does on a Project.
+- The manager does NOT supervise the Employee directly . The manager supervises the work relationship between Employee and Project.
+- We combine the relationship works_on with its two entities (Employee + Project) and treat it as a single higher-level entity.
+```sql
+ [Employee — works_on — Project]   →  aggregated into a box
+``` 
 
 ---
 
@@ -305,6 +312,7 @@ This section covers different types of **keys** in the relational model and the 
 ## 🔹 Relational Model Keys  
 
 Keys are always defined on **attributes**. They are used to uniquely identify tuples (rows) in a table.  
+- tuple(row in the table)
 
 ### 1. Super Key  
 - Any combination of attributes that can **uniquely identify a tuple** in a table.  
@@ -375,17 +383,12 @@ This document contains concise notes on **SQL fundamentals**, data types, comman
 ---
 
 ## 🔹 What is SQL?  
-**SQL (Structured Query Language)** is a database language used to **interact with databases**.  
+**SQL (Structured Query Language)** is a database language used to **interact with relational databases**.  
 It helps perform CRUD operations (**Create, Read, Update, Delete**) on data.  
 
 - Example:  
-  - **MySQL** → An RDBMS (Relational Database Management System) that uses SQL.  
-
----
-# 🧠 SQL (Structured Query Language) — Complete Notes
-
-SQL (Structured Query Language) is a **database language** used to **interact with and manage relational databases**.
-
+  - **MySQL** → An RDBMS (Relational Database Management System) that uses SQL.
+  
 ---
 
 ## 🗃️ Example of RDBMS
@@ -429,6 +432,13 @@ SQL (Structured Query Language) is a **database language** used to **interact wi
 📝 **Note:**  
 MySQL supports **signed** and **unsigned** numeric types.  
 Unsigned types increase the positive range (no negative values).
+```sql
+CREATE TABLE signed_example (
+    num1 INT SIGNED, //default
+    num2 INT UNSIGNED
+);
+
+```
 
 ---
 
