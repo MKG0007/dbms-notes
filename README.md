@@ -865,3 +865,154 @@ select colname form table_name where condition (subquery);
 
 ```
 
+
+
+
+# Database Management System (DBMS) Notes
+
+## 1. Functional Dependencies (FD)
+
+Functional Dependency is the mathematical representation of the relationship between attributes in a relation (table). It describes how one attribute determines the value of another.
+
+**Definition:**
+If we are given the value of attribute **'A'**, and attribute **'B'** depends on it, we can uniquely determine the value of 'B'.
+
+* **Notation:** `A -> B`
+* **A (Determinant):** The attribute that identifies the other.
+* **B (Dependent):** The attribute that is determined by A.
+
+
+
+[Image of functional dependency diagram example]
+
+
+### Types of Dependencies
+
+#### 1. Trivial Functional Dependency
+A dependency `A -> B` is **trivial** if `B` is a subset of `A`.
+* *Example:* If `A = {Student_ID, Name}` and `B = {Name}`, then `A -> B` is trivial because `Name` is already inside `A`.
+
+#### 2. Non-Trivial Functional Dependency
+A dependency `A -> B` is **non-trivial** if `B` is **not** a subset of `A`.
+* *Strictly Non-Trivial:* If the intersection of A and B is NULL (they share no common attributes).
+* *Example:* `Student_ID -> Name` (Name is not part of Student_ID).
+
+---
+
+## 2. Armstrong's Axioms (Rules of FD)
+
+These are the fundamental inference rules used to derive new functional dependencies.
+
+1.  **Reflexivity:** If `Y` is a subset of `X`, then `X -> Y`.
+2.  **Augmentation:** If `X -> Y`, then `XZ -> YZ` (adding the same attribute to both sides doesn't change the dependency).
+3.  **Transitivity:** If `A -> B` and `B -> C`, then `A -> C`.
+
+---
+
+## 3. Database Anomalies
+
+Anomalies are problems caused by **data redundancy** (repetition of data) in an un-normalized database. We normalize tables to fix these three specific issues:
+
+1.  **Insertion Anomaly:**
+    * The inability to add data to the database because some data is missing.
+    * *Example:* You cannot add a new "Course" if there is no "Student" enrolled in it yet (if Student_ID is the primary key).
+
+2.  **Deletion Anomaly:**
+    * The unintended loss of important data when deleting other data.
+    * *Example:* If a student drops a class and you delete the student's row, you might accidentally delete the only record of that class description.
+
+3.  **Update (Updation) Anomaly:**
+    * A situation where updating a single data value requires updating multiple rows. If one row is missed, the data becomes inconsistent.
+    * *Example:* If a professor's phone number changes, and they teach 10 classes, you must update all 10 rows.
+
+> **Note:** As the size of the database increases, these anomalies become harder to manage. Normalization helps us avoid this.
+
+---
+
+## 4. Normalization
+
+**Goal:** Decompose a large table into multiple smaller tables to reduce redundancy until the database satisfies the **Single Responsibility Principle** (each table deals with one entity).
+
+
+
+### 1st Normal Form (1NF)
+**Rules:**
+* Every column (attribute) must have an **atomic** (indivisible) value.
+* No multi-valued attributes.
+* Each record needs to be unique.
+
+**Example (Violation of 1NF):**
+| ID | Name | Courses |
+| :--- | :--- | :--- |
+| 101 | John | Math, Science |
+
+**Example (Converted to 1NF):**
+| ID | Name | Course |
+| :--- | :--- | :--- |
+| 101 | John | Math |
+| 101 | John | Science |
+
+---
+
+### 2nd Normal Form (2NF)
+**Rules:**
+* Must be in **1NF**.
+* **No Partial Dependency:** All non-prime attributes must be fully dependent on the *entire* Primary Key.
+    * *Partial Dependency Definition:* When a non-prime attribute depends on only a *part* of a composite Primary Key.
+
+**Example (Violation of 2NF):**
+*Primary Key is {Student_ID, Course_ID}*
+
+| Student_ID | Course_ID | Student_Name | Grade |
+| :--- | :--- | :--- | :--- |
+| 1 | C1 | Mayank | A |
+
+* *Problem:* `Student_Name` depends only on `Student_ID`, not on `Course_ID`. This is a partial dependency.
+* *Fix:* Split into two tables: one for Student details, one for Grades.
+
+---
+
+### 3rd Normal Form (3NF)
+**Rules:**
+* Must be in **2NF**.
+* **No Transitive Dependency:** Non-prime attributes should not depend on other non-prime attributes.
+    * *Formula:* For `A -> B`, `A` must be a Super Key **OR** `B` must be a Prime Attribute.
+
+**Example (Violation of 3NF):**
+| Emp_ID | Zip_Code | City |
+| :--- | :--- | :--- |
+| 101 | 144411 | Phagwara |
+
+* *Dependency:* `Emp_ID -> Zip_Code` and `Zip_Code -> City`.
+* *Problem:* `City` depends on `Zip_Code`, and `Zip_Code` is not a primary key. This is transitivity (`Emp_ID -> City` via `Zip_Code`).
+
+---
+
+### Boyce-Codd Normal Form (BCNF)
+Also known as "3.5NF," it is a stricter version of 3NF.
+
+**Rules:**
+* Must be in **3NF**.
+* For every functional dependency `X -> Y`, **X must be a Super Key**.
+* *Simplified:* A non-prime attribute cannot determine a prime attribute.
+
+**Difference from 3NF:**
+BCNF handles cases where a table is in 3NF but still has redundancy because a Prime Attribute depends on a Non-Prime Attribute.
+
+---
+
+## 5. Advantages of Normalization
+
+1.  **Minimizes Data Redundancy:** Reduces storage space by removing duplicate data.
+2.  **Organized Database:** Ensures data is logically stored.
+3.  **Data Consistency:** Changes in data need to be made in only one place, preventing anomalies.
+4.  **Improved Query Performance:** (In some cases) Smaller, leaner tables can be faster to scan (though joining them requires optimization).
+
+
+
+| Normal Form | Requirement | Catchphrase / Memory Aid |
+| :--- | :--- | :--- |
+| **1NF** | Atomic values only (no lists in cells). | **"Make it Flat"** |
+| **2NF** | Must be 1NF + **No Partial Dependency**. | **"The Whole Key"** (Non-keys depend on the full Primary Key). |
+| **3NF** | Must be 2NF + **No Transitive Dependency**. | **"Nothing But the Key"** (Non-keys shouldn't depend on other non-keys). |
+| **BCNF** | Must be 3NF + LHS of every FD is a **Super Key**. | **"Strictly the Key"** (Even stricter than 3NF). |
