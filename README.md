@@ -1016,3 +1016,83 @@ BCNF handles cases where a table is in 3NF but still has redundancy because a Pr
 | **2NF** | Must be 1NF + **No Partial Dependency**. | **"The Whole Key"** (Non-keys depend on the full Primary Key). |
 | **3NF** | Must be 2NF + **No Transitive Dependency**. | **"Nothing But the Key"** (Non-keys shouldn't depend on other non-keys). |
 | **BCNF** | Must be 3NF + LHS of every FD is a **Super Key**. | **"Strictly the Key"** (Even stricter than 3NF). |
+
+
+
+
+## Database Transactions & ACID Properties
+
+## 1. What is a Transaction?
+A **Transaction** is a single logical unit of work performed against a database. It may consist of multiple SQL statements (reads and writes), but the database treats them as a single indivisible operation.
+
+* **Logic:** The operations must execute in a specific sequence.
+* **The Golden Rule:** either **ALL** statements execute successfully, or **NONE** of them do.
+    * *Success:* The transaction is **Committed** (saved permanently).
+    * *Failure:* The transaction is **Rolled Back** (all intermediate changes are undone).
+
+> **Note on Rollbacks:**
+> The database maintains the "Old State" (before transaction) and the "Intermediate State" (during execution). If a failure occurs at *any* point, the DB uses logs to revert the system back to the Old State.
+
+---
+
+## 2. ACID Properties
+To ensure data integrity, every transaction must strictly follow these four properties:
+
+| Property | Definition | Key Concept |
+| :--- | :--- | :--- |
+| **A**tomicity | The "All or Nothing" rule. Either all operations in the transaction happen, or none happen. | *Reflects in DB or Rolled back.* |
+| **C**onsistency | The database must move from one valid state to another valid state. All integrity constraints (rules) must be maintained. | *Correctness of Data.* |
+| **I**solation | Multiple transactions can execute concurrently, but they must not interfere with each other. The result should be as if they were executed sequentially. | *Concurrency Control.* |
+| **D**urability | Once a transaction is committed, the changes are permanent (persisted), even if the system crashes or power fails immediately after. | *Recovery Management.* |
+
+
+
+[Image of ACID properties diagram]
+
+
+---
+
+## 3. Transaction States in DBMS
+
+A transaction goes through specific states during its lifecycle. It creates a path from start to termination.
+
+
+
+### The Lifecycle Steps
+
+#### Step 1: Active State
+* The initial state.
+* The transaction enters this state when execution begins.
+* Read and Write operations are being performed in the memory.
+
+#### Step 2: Partially Committed State
+* Occurs after the final operation of the transaction is executed.
+* **Crucial Detail:** Changes are currently saved in the **Buffer (Main Memory)**, but not yet written to the permanent database on the disk.
+* *Risk:* If the hardware fails here, data is lost.
+
+#### Step 3: Committed State (Success Path)
+* Occurs after the data from the buffer is successfully written to the **Database (Disk)**.
+* Once committed, the changes are durable and cannot be undone.
+
+#### Step 4: Failed State (Failure Path)
+* The transaction moves here if a hardware or logical error occurs while in the *Active* or *Partially Committed* state.
+* The system recognizes that the transaction can no longer proceed.
+
+#### Step 5: Aborted State
+* Triggered after the *Failed* state.
+* **Rollback** happens here: The Recovery Manager undoes all changes made to the buffer to return the database to its consistent state.
+
+#### Step 6: Terminated State
+* The final state.
+* Reached either after a successful **Commit** or a completed **Abort**.
+* The system resources tied to the transaction are released.
+
+---
+
+### Summary Flow
+
+**Success Scenario:**
+`Active` -> `Partially Committed` -> `Committed` -> `Terminated`
+
+**Failure Scenario:**
+`Active` -> `Failed` -> `Aborted` -> `Terminated`
