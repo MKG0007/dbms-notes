@@ -1046,10 +1046,6 @@ To ensure data integrity, every transaction must strictly follow these four prop
 | **D**urability | Once a transaction is committed, the changes are permanent (persisted), even if the system crashes or power fails immediately after. | *Recovery Management.* |
 
 
-
-[Image of ACID properties diagram]
-
-
 ---
 
 ## 3. Transaction States in DBMS
@@ -1086,6 +1082,9 @@ A transaction goes through specific states during its lifecycle. It creates a pa
 * The final state.
 * Reached either after a successful **Commit** or a completed **Abort**.
 * The system resources tied to the transaction are released.
+
+
+![](stateimg.png)
 
 ---
 
